@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/util/config.js"></script>
+    <script src="js/util/user.js"></script>
 </head>
 
 <body>
@@ -23,11 +26,28 @@
             <form class="login_form">
                 <i class="iconfont icon-user"></i>
                 <i class="iconfont icon-key"></i>
-                <input type="text" class="input_txt" placeholder="邮箱/手机号">
-                <input type="password" class="input_pass" placeholder="密码">
-                <input type="submit" class="input_sub" value="登 录">
+                <input type="text" class="input_txt" placeholder="邮箱/手机号" id="user_name">
+                <input type="password" class="input_pass" placeholder="密码" id="password">
+                <input type="button" class="input_sub" value="登 录" id="login">
             </form>
         </div>
-    </div> 
+    </div>
 </body>
+<script>
+    $("#login").on("click", function () {
+        var user_name = $("#user_name").val().trim();
+        var password = $("#password").val().trim();
+        user.login(user_name, password)
+            .then(function (res) {
+                if (res.code == 200) {
+                    alert(res.msg);
+                    location.href = "./index.html"
+                } else {
+                    alert(res.msg);
+                    return;
+                }
+            })
+    });
+</script>
+
 </html>
