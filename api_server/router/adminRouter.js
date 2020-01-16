@@ -1,19 +1,27 @@
 // 导入express
-const express = require('express')
+const express = require('D:/Program Files/nodejs/node_global/node_modules/express')
 // 导入路由
 const router = express.Router()
 // 导入控制器
 const adminController = require('../controllers/adminController')
 // 导入bodyParser中间件
-const bodyParser = require('body-parser')
+const bodyParser = require('C:/Users/Administrator/node_modules/body-parser')
 // 导入multer中间件
-const multer = require('multer')
-const upload = multer({ dest: 'uploads/articles/' })
-const uploadUser = multer({ dest: 'uploads/' })
-const uploadImage = multer({ dest: 'uploads/img' })
+const multer = require('C:/Users/Administrator/node_modules/multer')
+const upload = multer({
+  dest: 'uploads/articles/'
+})
+const uploadUser = multer({
+  dest: 'uploads/'
+})
+const uploadImage = multer({
+  dest: 'uploads/img'
+})
 // 注册body-parser中间件
 // parse application/x-www-form-urlencoded
-router.use(bodyParser.urlencoded({ extended: false }))
+router.use(bodyParser.urlencoded({
+  extended: false
+}))
 
 // 登录
 router.post('/login', adminController.login)
@@ -35,9 +43,11 @@ router.get('/article_category_visit', adminController.article_category_visit)
 router.get('/search', adminController.search)
 // 文章发布
 router.post('/article_publish', upload.single('cover'), adminController.article_publish)
-router.post('/submit_image', uploadImage.single('file'), function(req, res) {
+router.post('/submit_image', uploadImage.single('file'), function (req, res) {
   // console.log(req.file)
-  res.json({ url: '/static/' + req.file })
+  res.json({
+    url: '/static/' + req.file
+  })
 })
 // 文章修改
 router.post('/article_edit', upload.single('cover'), adminController.article_edit)

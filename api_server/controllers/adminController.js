@@ -1,6 +1,6 @@
 const path = require('path')
 // 导入moment
-const moment = require('moment')
+const moment = require('C:/Users/Administrator/node_modules/moment')
 
 // 导入配置
 const config = require(path.join(__dirname, '../utils/config'))
@@ -21,7 +21,7 @@ module.exports = {
   ...category,
   ...comment,
   // 获取文章数量统计
-  article_count (req, res) {
+  article_count(req, res) {
     res.send({
       msg: '文章统计获取成功',
       code: 200,
@@ -32,7 +32,7 @@ module.exports = {
     })
   },
   // 获取评论数量统计
-  comment_count (req, res) {
+  comment_count(req, res) {
     res.send({
       msg: '评论数量获取成功',
       code: 200,
@@ -43,7 +43,7 @@ module.exports = {
     })
   },
   // 月新增文章获取
-  month_article_count (req, res) {
+  month_article_count(req, res) {
     // 根据今天日期获取一个月的
     // 生成日期数组
     const data = []
@@ -63,12 +63,11 @@ module.exports = {
     })
   },
   // 获取类型对应文章数
-  article_category_count (req, res) {
+  article_category_count(req, res) {
     res.send({
       msg: '类型统计数据获取成功',
       code: 200,
-      data: [
-        {
+      data: [{
           type: '科技',
           all_count: 1
         },
@@ -80,15 +79,13 @@ module.exports = {
     })
   },
   // 月文章访问量
-  article_category_visit (req, res) {
+  article_category_visit(req, res) {
     res.send({
       msg: '月文章访问量获取成功',
       code: 200,
-      data: [
-        {
+      data: [{
           month: '1月',
-          all_count: [
-            {
+          all_count: [{
               type: '科技',
               count: 237
             },
@@ -100,8 +97,7 @@ module.exports = {
         },
         {
           month: '2月',
-          all_count: [
-            {
+          all_count: [{
               type: '科技',
               count: 237
             },
@@ -113,8 +109,7 @@ module.exports = {
         },
         {
           month: '三月',
-          all_count: [
-            {
+          all_count: [{
               type: '科技',
               count: 237
             },
@@ -126,8 +121,7 @@ module.exports = {
         },
         {
           month: '四月',
-          all_count: [
-            {
+          all_count: [{
               type: '科技',
               count: 123
             },
@@ -139,8 +133,7 @@ module.exports = {
         },
         {
           month: '五月',
-          all_count: [
-            {
+          all_count: [{
               type: '科技',
               count: 99
             },
@@ -155,7 +148,7 @@ module.exports = {
   },
 
   // 获取用户信息
-  userinfo_get (req, res) {
+  userinfo_get(req, res) {
     // 获取用户信息
     const user = db.getUser()
     user.user_pic = config.serverAddress + user.user_pic
@@ -165,7 +158,7 @@ module.exports = {
       data: user
     })
   },
-  userinfo_edit (req, res) {
+  userinfo_edit(req, res) {
     // 获取用户数据
     const user = db.getUser()
     // 允许的图片类型

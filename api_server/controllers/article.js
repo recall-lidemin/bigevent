@@ -2,12 +2,12 @@ const path = require('path')
 const article = require(path.join(__dirname, '../utils/article'))
 const category = require(path.join(__dirname, '../utils/category'))
 const config = require(path.join(__dirname, '../utils/config'))
-const moment = require('moment')
+const moment = require('C:/Users/Administrator/node_modules/moment')
 const fs = require('fs')
 module.exports = {
   // 文章搜索
 
-  search (req, res) {
+  search(req, res) {
     // 获取提交的数据
     const key = req.query.key || ''
     const type = req.query.type || ''
@@ -44,7 +44,18 @@ module.exports = {
       })
       .reverse()
       .map(v => {
-        let { id, title, content, cover, type, read, comment, date, state, author } = v
+        let {
+          id,
+          title,
+          content,
+          cover,
+          type,
+          read,
+          comment,
+          date,
+          state,
+          author
+        } = v
         if (cover.indexOf('http') == -1 && cover.indexOf(config.serverAddress) == -1) {
           cover = config.serverAddress + cover
         }
@@ -106,7 +117,7 @@ module.exports = {
     })
   },
   // 文章发布
-  article_publish (req, res) {
+  article_publish(req, res) {
     // 获取数据
     const title = req.body.title || ''
     const type = req.body.type || 1
@@ -173,7 +184,7 @@ module.exports = {
     // res.send(req.file)
   },
   // 文章编辑
-  article_edit (req, res) {
+  article_edit(req, res) {
     const id = req.body.id
     // 获取数据
     const title = req.body.title
@@ -205,8 +216,7 @@ module.exports = {
         code: 400
       })
       return
-    } else {
-    }
+    } else {}
 
     // 允许的图片类型
     if (req.file) {
@@ -222,7 +232,14 @@ module.exports = {
     }
     // 设置封面
     // 修改文章
-    if (article.editArticle({ id, title, type, content, cover, date })) {
+    if (article.editArticle({
+        id,
+        title,
+        type,
+        content,
+        cover,
+        date
+      })) {
       res.send({
         msg: '修改成功',
         code: 200
@@ -239,25 +256,37 @@ module.exports = {
   },
 
   // 文章删除
-  article_delete (req, res) {
+  article_delete(req, res) {
     console.log('article_delete....', req.query.id)
     // 获取id
     if (!req.query.id) {
-      res.send({ msg: 'id不能为空', code: 400 })
+      res.send({
+        msg: 'id不能为空',
+        code: 400
+      })
       return
     }
     // 获取id
     const id = req.query.id
     if (isNaN(id)) {
-      res.send({ msg: 'id无效,请检查', code: 400 })
+      res.send({
+        msg: 'id无效,请检查',
+        code: 400
+      })
       return
     }
 
     // 删除
     if (article.del(id)) {
-      res.send({ msg: '删除成功', code: 200 })
+      res.send({
+        msg: '删除成功',
+        code: 200
+      })
     } else {
-      res.send({ msg: '删除失败，请检查', code: 200 })
+      res.send({
+        msg: '删除失败，请检查',
+        code: 200
+      })
     }
   }
 }
