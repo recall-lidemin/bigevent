@@ -7,7 +7,7 @@
  */
 
 // 基地址
-var baseAddress = "http://192.168.172.66:8000";
+var baseAddress = "http://192.168.0.108:8000";
 
 // 封装接口地址对象
 var APIURLS = {

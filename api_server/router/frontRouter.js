@@ -1,5 +1,5 @@
 // 导入express
-const express = require('D:/Program Files/nodejs/node_global/node_modules/express')
+const express = require('express')
 // 导入路由
 const router = express.Router()
 // 导入信息
@@ -27,9 +27,7 @@ router.get('/search', (req, res, next) => {
 
   // 类型判断
   if (isNaN(page) || isNaN(perpage)) {
-    next({
-      msg: '参数格式不正确'
-    })
+    next({ msg: '参数格式不正确' })
     return
   }
   // 数据获取
@@ -78,11 +76,7 @@ router.post('/post_comment', (req, res) => {
   const name = req.body.name
   const content = req.body.content
 
-  const result = COMMENT.addComments({
-    name,
-    content,
-    article_id
-  })
+  const result = COMMENT.addComments({ name, content, article_id })
   if (result) {
     res.send({
       msg: '添加评论成功',
@@ -101,9 +95,7 @@ router.get('/get_comments', (req, res) => {
   // 参数获取
   const article_id = req.query.article_id
 
-  const result = COMMENT.getComments({
-    article_id
-  })
+  const result = COMMENT.getComments({ article_id })
   if (result) {
     res.send({
       msg: '获取评论成功！',
@@ -124,16 +116,7 @@ router.get('/lastest', (req, res) => {
   var regx = /[\u4E00-\u9FA5\d]+/g
   // 数据获取
   const article = db.getArticle().slice(-5).map(it => {
-    let {
-      id,
-      title,
-      content,
-      cover,
-      type,
-      read,
-      comment,
-      date
-    } = it
+    let { id, title, content, cover, type, read, comment, date } = it
     content += ''
     content = content.substr(0, 200)
     console.log(content)
@@ -177,77 +160,40 @@ router.get('/latest_comment', (req, res) => {
 
 // 访问新闻详情
 router.get('/article', (req, res, _next) => {
-  let {
-    id
-  } = req.query
+  let { id } = req.query
   id = Number(id)
   if (isNaN(id)) {
-    _next({
-      msg: '文章编号格式不对'
-    })
+    _next({ msg: '文章编号格式不对' })
     return
   }
   const articleList = db.getArticle()
 
   const idx = articleList.findIndex(it => it.id === id)
   if (idx === -1) {
-    res.json({
-      code: 404,
-      msg: '没有找到'
-    })
+    res.json({ code: 404, msg: '没有找到' })
     return
   }
-  let {
-    title,
-    author,
-    type: type_id,
-    date,
-    read,
-    comment,
-    content,
-    prev,
-    next
-  } = articleList[idx]
+  let { title, author, type:type_id, date, read, comment, content, prev, next } = articleList[idx]
   const cateList = require(CATE_PATH)
 
   let type_name = cateList.find(it => it.id == type_id)
   type_name = type_name ? type_name.name : '未知'
   // 增加一次阅读量
-  db.editArticle({
-    id: id,
-    read: 1
-  })
+  db.editArticle({ id: id, read: 1 })
 
-  comment = COMMENT.getComments({
-    article_id: id
-  }).length
+  comment = COMMENT.getComments({ article_id: id }).length
 
   if (idx > 0) {
-    prev = {
-      id: articleList[idx - 1].id,
-      title: articleList[idx - 1].title
-    }
+    prev = { id: articleList[idx - 1].id, title: articleList[idx - 1].title }
   }
   if (idx < articleList.length - 1) {
-    next = {
-      id: articleList[idx + 1].id,
-      title: articleList[idx + 1].title
-    }
+    next = { id: articleList[idx + 1].id, title: articleList[idx + 1].title }
   }
 
   res.json({
     code: 200,
     data: {
-      title,
-      author,
-      type_id,
-      type_name,
-      date,
-      read,
-      comment,
-      content,
-      prev,
-      next
+      title, author, type_id,type_name, date, read, comment, content, prev, next
     }
   })
 })
@@ -266,15 +212,11 @@ router.get('/get_latest_comments', (req, res) => {
 
 // 阅读量排行
 router.get('/rank', (req, res, _next) => {
-  let {
-    type
-  } = req.query
+  let { type } = req.query
   type = type || 0
   type = Number(type)
   if (isNaN(type)) {
-    _next({
-      msg: '文章编号格式不对'
-    })
+    _next({ msg: '文章编号格式不对' })
     return
   }
 
@@ -284,17 +226,9 @@ router.get('/rank', (req, res, _next) => {
       .filter(it => (it.type == type))
       .sort((a, b) => b.read - a.read)
       .splice(0, 7)
-      .map(it => ({
-        id: it.id,
-        title: it.title,
-        read: it.read
-      }))
+      .map(it => ({ id: it.id, title: it.title, read: it.read }))
   } else {
-    articleList = db.getArticle().sort((a, b) => b.read - a.read).splice(0, 7).map(it => ({
-      id: it.id,
-      title: it.title,
-      read: it.read
-    }))
+    articleList = db.getArticle().sort((a, b) => b.read - a.read).splice(0, 7).map(it => ({ id: it.id, title: it.title, read: it.read }))
   }
 
   res.json({

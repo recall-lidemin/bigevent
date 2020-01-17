@@ -1,25 +1,21 @@
 // 导入express
-const express = require('D:/Program Files/nodejs/node_global/node_modules/express')
+const express = require('express')
 // 日志中间件
 // const morgan = require('morgan')
 
 // 导入路由
-const {
-  getIPAdress
-} = require('./utils/ipAdress')
+const { getIPAdress } = require('./utils/ipAdress')
 
-const jwt = require('C:/Users/Administrator/node_modules/jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const frontRouter = require('./router/frontRouter')
 const adminRouter = require('./router/adminRouter')
 // 实例化服务器对象
 const app = express()
 // 导入bodyParser中间件
-const bodyParser = require('C:/Users/Administrator/node_modules/body-parser')
+const bodyParser = require('body-parser')
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-  extended: false
-}))
-var cookieParser = require('C:/Users/Administrator/node_modules/cookie-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
+var cookieParser = require('cookie-parser')
 app.use(cookieParser())
 // 日志中间件
 // app.use(morgan('tiny'))
@@ -47,24 +43,17 @@ if (process.argv[2] === 'token') {
       next()
     } else if (req.url === '/logout') {
       // res.clearCookie('token');
-      res.cookie('token', '1', {
-        expires: new Date(Date.now() - 1000 * 5)
-      })
+      res.cookie('token', '1', { expires: new Date(Date.now() - 1000 * 5) })
       next()
     } else {
-      const {
-        token
-      } = req.cookies
+      const { token } = req.cookies
       const secretOrPrivateKey = 'jwt' // 这是加密的key（密钥）
       jwt.verify(token, secretOrPrivateKey, (err, decode) => {
         console.log('jwt.verify', token)
         if (err) {
           //  时间失效的时候 || 伪造的token
           res.statusCode = 403
-          res.send({
-            success: false,
-            msg: '无权访问'
-          })
+          res.send({ success: false, msg: '无权访问' })
         } else {
           next()
         }
@@ -77,12 +66,10 @@ app.use('/', frontRouter)
 // 注册后台路由
 app.use('/admin', adminRouter)
 
-app.use((err, req, res) => {
-  console.log(err)
-  res.json({
-    code: 500,
-    err
-  })
+app.use(function(err, req, res,next){
+  console.error(err.stack)
+  res.status(500).send('出错')
+  // res.send({ code: 500, err })
 })
 // 开启监听
 app.listen(8000, () => {
