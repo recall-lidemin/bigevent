@@ -27,5 +27,14 @@ var article = {
         return $.get(APIURLS.article_delete, {
             "id": id
         });
-    }
+    },
+    publish: function (fd) {
+        return $.ajax({
+            url: APIURLS.article_publish,
+            type: "post",
+            data: fd,
+            processData: false,
+            contentType: false
+        });
+    },
 }

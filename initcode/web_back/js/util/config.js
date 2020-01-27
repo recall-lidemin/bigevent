@@ -34,4 +34,6 @@ var APIURLS = {
     search: baseAddress + "/admin/search",
     // 删除文章
     article_delete: baseAddress + "/admin/article_delete",
+    // 发布文章
+    article_publish: baseAddress + "/admin/article_publish",
 }
