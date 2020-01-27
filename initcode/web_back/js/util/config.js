@@ -27,5 +27,7 @@ var APIURLS = {
     getAddCategory: baseAddress + "/admin/category_add",
     // 点击删除文章类别
     category_delete: baseAddress + "/admin/category_delete",
+    // 编辑文章类别
+    category_edit: baseAddress + "/admin/category_edit",
 
 }

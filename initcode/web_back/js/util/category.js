@@ -16,4 +16,12 @@ var category = {
             "id": id,
         });
     },
+    // 编辑文章类别
+    edit: function (id, name, slug) {
+        return $.post(APIURLS.category_edit, {
+            "id": id,
+            "name": name,
+            "slug": slug
+        });
+    },
 }
