@@ -14,5 +14,8 @@ var article = {
                 alert(res.msg);
             }
         });
-    }
+    },
+    get: function () {
+        return $.get(APIURLS.search);
+    },
 }

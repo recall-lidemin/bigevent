@@ -30,4 +30,8 @@ var APIURLS = {
     // 编辑文章类别
     category_edit: baseAddress + "/admin/category_edit",
 
+    // 获取文章
+    search: baseAddress + "/admin/search",
+
+
 }
