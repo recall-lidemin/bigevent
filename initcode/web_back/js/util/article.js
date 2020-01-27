@@ -15,7 +15,17 @@ var article = {
             }
         });
     },
-    get: function () {
-        return $.get(APIURLS.search);
+    get: function (curPage, curType, curStatus) {
+        return $.get(APIURLS.search, {
+            "page": curPage,
+            "type": curType,
+            "state": curStatus
+        });
     },
+    // 删除
+    del: function (id) {
+        return $.get(APIURLS.article_delete, {
+            "id": id
+        });
+    }
 }
