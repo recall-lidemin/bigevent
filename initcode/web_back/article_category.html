@@ -28,38 +28,8 @@
                         <th class="text-center" width="100">操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>未分类</td>
-                        <td>uncategorized</td>
-                        <td class="text-center">
-                            <a href="javascript:editTr({&quot;id&quot;:&quot;1&quot;,&quot;slug&quot;:&quot;uncategorized&quot;,&quot;name&quot;:&quot;未分类&quot;});"
-                                class="btn btn-info btn-xs">编辑</a>
-                            <a href="javascript:deleteTr( 1 );" class="btn btn-danger btn-xs">删除</a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>奇趣事</td>
-                        <td>funny</td>
-                        <td class="text-center">
-                            <a href="javascript:editTr({&quot;id&quot;:&quot;2&quot;,&quot;slug&quot;:&quot;funny&quot;,&quot;name&quot;:&quot;奇趣事&quot;});"
-                                class="btn btn-info btn-xs">编辑</a>
-                            <a href="javascript:deleteTr( 2 );" class="btn btn-danger btn-xs">删除</a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>会生活</td>
-                        <td>living</td>
-                        <td class="text-center">
-                            <a href="javascript:editTr({&quot;id&quot;:&quot;3&quot;,&quot;slug&quot;:&quot;living&quot;,&quot;name&quot;:&quot;会生活&quot;});"
-                                class="btn btn-info btn-xs">编辑</a>
-                            <a href="javascript:deleteTr( 3 );" class="btn btn-danger btn-xs">删除</a>
-                        </td>
-                    </tr>
-
-                    <tr>
+                <tbody id="category_table">
+                    <!-- <tr>
                         <td>爱旅行</td>
                         <td>travel</td>
                         <td class="text-center">
@@ -67,7 +37,7 @@
                                 class="btn btn-info btn-xs">编辑</a>
                             <a href="javascript:deleteTr( 4 );" class="btn btn-danger btn-xs">删除</a>
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
                 <tfoot>
                     <tr>
@@ -79,7 +49,7 @@
             </table>
         </div>
     </div>
-
+    <!-- 模态框 -->
     <div class="modal fade" id="addModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -91,11 +61,11 @@
                     <form>
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="name">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">分类别名:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="slug">
                         </div>
                     </form>
                 </div>
@@ -106,29 +76,75 @@
             </div>
         </div>
     </div>
-
+    <script src="js/util/config.js"></script>
+    <script src="js/util/category.js"></script>
+    <script src="js/template-web.js"></script>
+    <script type="text/html" id="tmp_cate">
+        {{each data item}}
+        <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.slug}}</td>
+            <td class="text-center">
+                <a href="javascript:;" class="btn btn-info btn-xs" id="edit">编辑</a>
+                <a href="javascript:;" class="btn btn-danger btn-xs" id="del" data-id="{{item.id}}">删除</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
     <script>
-        // $('#addModal').modal({
-        //     show: false,
-        //     backdrop: false
-        // });
+        function getAndShow() {
+            category.get().then(function (res) {
+                console.log(res);
+                // 渲染数据
+                var htmlstr = template("tmp_cate", res);
+                // 把数据显示到页面
+                $("#category_table").html(htmlstr);
+            });
+        }
 
-        // $('#model_shutoff').click(function () {
-        //     alert('shutoff');
-        //     $('#addModal').modal('hide');
-        // });
+        getAndShow();
 
-        // $('#model_add').click(function () {
-        //     alert('add');
-        //     $('#addModal').modal('hide');
-        // });
+        // 实现点击新增
+        $("#model_add").click(function () {
+            var name = $("#name").val().trim();
+            var slug = $("#slug").val().trim();
+            if (name.lemgth == 0 || slug.length == 0) {
+                alert("不能为空");
+                return;
+            }
+            category.add(name, slug).then(function (res) {
+                if (res.code == 200) {
+                    // alert(res.msg);
+                    // 隐藏模态框
+                    $("#addModal").modal("hide");
+                    // 重新获取
+                    getAndShow();
+                } else {
+                    alert(res.msg);
+                }
+            });
 
-        // $('.category_table').delegate('a', 'click', function () {
-        //     if ($(this).hasClass('btn-info')) {
-        //         $('#addModal .modal-title').html('修改分类名称');
-        //         $('#addModal').modal('show');
-        //     }
-        // })      
+        });
+
+        // 点击关闭隐藏模态框
+        $("#model_shutoff").click(function () {
+            $("#addModal").modal("hide");
+        });
+
+        // 点击删除
+        $("#category_table").on("click", "#del", function () {
+            // 生成模板时要设置data-id,删除时获取
+            // 获取data-id，
+            var id = $(this).attr("data-id");
+            category.del(id).then(function (res) {
+                if (res.code == 200) {
+                    // alert(res.msg);
+                    getAndShow();
+                } else {
+                    alert(res.msg);
+                }
+            });
+        });
     </script>
 
 </body>
