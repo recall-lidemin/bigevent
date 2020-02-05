@@ -96,6 +96,11 @@
 
         article.publish(fd).then(function (res) {
             console.log(res);
+            if (res.code === 201) {
+                alert('发布成功')
+            } else {
+                alert(res.msg)
+            }
         });
     });
 
