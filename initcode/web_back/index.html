@@ -64,16 +64,6 @@
 
 
     <script>
-        user.getUserInfo().then(function (res) {
-            console.log(res);
-            if (res.code == 200) {
-                $("#nickname").text(res.data.nickname);
-                $(".user_pic").prop("src", res.data.user_pic);
-            } else {
-                alert(res.msg);
-            }
-        });
-
         var $level01 = $('.level01');
         var $subli = $('.level02 li')
         $level01.click(function () {
@@ -123,12 +113,21 @@
                 $('.level02').children().eq(n).addClass('active').siblings().removeClass('active');
             }
         }
+    </script>
+    <script>
+        user.getUserInfo().then(function (res) {
+            if (res.code == 200) {
+                $("#nickname").text(res.data.nickname);
+                $(".user_pic").prop("src", res.data.user_pic);
+            } else {
+                alert(res.msg);
+            }
+        });
 
         $("#logout").on("click", function () {
             user.logout();
         });
     </script>
-
 </body>
 
 </html>

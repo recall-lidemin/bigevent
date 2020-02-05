@@ -58,7 +58,7 @@
                     <h4 class="modal-title">新增分类</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form submit="return false">
                         <div class="form-group">
                             <label for="name" class="control-label">分类名称:</label>
                             <input type="text" class="form-control" id="name">
@@ -85,7 +85,7 @@
                     <h4 class="modal-title">新增分类</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form submit="return false">
                         <input type="hidden" class="form-control" id="edit_id">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
@@ -123,12 +123,17 @@
     <script>
         function getAndShow() {
             category.get().then(function (res) {
-                console.log(res);
-                // 渲染数据
-                var htmlstr = template("tmp_cate", res);
-                // 把数据显示到页面
-                $("#category_table").html(htmlstr);
-            });
+                // res 就是从服务器中获取的数据
+                // console.log(res);
+                if (res.code === 200) {
+                    // res:{code, data:[]}
+                    // 把数据拼接成html字符串，显示在tbody中
+                    // var htmlStr = template('id',数据)
+                    var htmlStr = template("tmp_cate", res)
+                    // 显示在dom容器中
+                    $('#category_table').html(htmlStr)
+                }
+            })
         }
 
         getAndShow();
@@ -142,12 +147,13 @@
                 return;
             }
             category.add(name, slug).then(function (res) {
-                if (res.code == 200) {
+                if (res.code === 200) {
                     // alert(res.msg);
+                    getAndShow();
                     // 隐藏模态框
                     $("#addModal").modal("hide");
                     // 重新获取
-                    getAndShow();
+
                 } else {
                     alert(res.msg);
                 }
@@ -204,8 +210,9 @@
             }
             category.edit(id, name, slug).then(function (res) {
                 if (res.code == 200) {
-                    $("#editModal").modal("hide");
                     getAndShow();
+                    $("#editModal").modal("hide");
+
                 } else {
                     alert(res.msg);
                 }
