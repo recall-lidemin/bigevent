@@ -6,6 +6,11 @@ var article = {
             "state": curStatus
         });
     },
+    getById: function (id) {
+        return $.get(APIURLS.search, {
+            "id": id,
+        });
+    },
     // 删除
     del: function (id) {
         return $.get(APIURLS.article_delete, {

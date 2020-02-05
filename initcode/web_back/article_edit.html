@@ -27,20 +27,20 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章标题：</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" value="文章标题文字">
+                        <input type="email" class="form-control" id="title" value="文章标题文字">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
-                        <img src="images/pic06.jpg" class="article_cover">
-                        <input type="file" id="exampleInputFile">
+                        <img src="images/pic06.jpg" class="article_cover" id="imgPreView">
+                        <input type="file" id="cover">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
-                        <select class="form-control">
+                        <select class="form-control" id="category">
                             <option>类别一</option>
                             <option>类别二</option>
                             <option>类别三</option>
@@ -66,7 +66,8 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="rich_content" name="content" placeholder="文章内容" value="文章内容">
+                        <input type="text" class="form-control" id="rich_content" name="content" placeholder="文章内容"
+                            value="文章内容">
                     </div>
                 </div>
                 <div class="form-group">
@@ -78,4 +79,54 @@
         </div>
     </div>
 </body>
+<script src="js/util/config.js"></script>
+<script src="js/util/article.js"></script>
+<script src="js/util/category.js"></script>
+<script src="js/template-web.js"></script>
+<script id="cate" type="text/html">
+    {{each data item}}
+    <option value="{{item.id}}">{{item.name}}</option>
+    {{/each}}
+</script>
+<script>
+    // console.log(window.location.search.split('=')[1]);
+    // 获取当前要编辑文章的id
+    // window.location.search获取当前页面地址查询字符串的值
+    var id = window.location.search.substr(4)
+
+    getAndShowCategory()
+    // 根据id发送请求回这篇文章的信息，并显示到页面
+    function getAndShow(id) {
+        article.getById(id).then(function (res) {
+            if (res.code === 200) {
+                // 把结果显示在页面上
+                $('#title').val(res.data.title)
+                $('#imgPreView').attr(res.data.cover)
+                $('#dateinput').val(res.data.date)
+                $('#category').val(res.data.type)
+                //给富文本编辑器设置内容   
+                setTimeout(function () {
+                    $('#rich_content').val(res.data.content)
+                }, 1)
+            } else {
+                alert(res.msg)
+            }
+        })
+    }
+
+    function getAndShowCategory() {
+        category.get().then(function (res) {
+            console.log(res);
+            if (res.code === 200) {
+                var htmlStr = template('cate', res)
+                $('#category').html(htmlStr)
+                getAndShow(id)
+            } else {
+                alert(res.msg)
+            }
+        })
+    }
+    // 再实现编辑并提交保存
+</script>
+
 </html>
