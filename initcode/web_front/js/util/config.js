@@ -1,0 +1,19 @@
+/** 
+ * 
+ * 接口配置
+ * author：LiDemin
+ * Time:2020.1.16
+ * 
+ */
+
+// 基地址
+var baseAddress = "http://192.168.0.110:8000";
+// var baseAddress = "http://118.190.211.78:8000/api/";
+
+// 封装接口地址对象
+var APIURLS = {
+    // 获取文章类别
+    getCategorySearch: baseAddress + "/admin/category_search",
+    // 获取文章
+    search: baseAddress + "/admin/search",
+}
