@@ -11,4 +11,10 @@ var article = {
             "id": id,
         });
     },
+    getFocuse: function () {
+        // 因为只要5条，所以直接设置
+        return $.get(APIURLS.article_get, {
+            perpage: 5
+        })
+    }
 }

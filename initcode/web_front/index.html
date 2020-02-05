@@ -45,7 +45,7 @@
 
     <div class="main_con clearfix">
         <div class="left_con">
-            <ul class="focus_list">
+            <ul class="focus_list" id="focus_list">
                 <li class="first">
                     <a href="#"><img src="images/pic01.jpg" alt=""></a>
                     <p>图片说明</p>
@@ -215,17 +215,41 @@
 <script src="js/jquery-1.12.4.min.js"></script>
 <script src="js/util/config.js"></script>
 <script src="js/util/category.js"></script>
+<script src="js/util/article.js"></script>
 <script src="js/template-web.js"></script>
 <script id="cate" type="text/html">
     {{each data item}}
     <li><a href="./list.html">{{item.name}}</a></li>
     {{/each}}
 </script>
+<script id="focus" type="text/html">
+    {{each data item index}}
+    {{if index==0}}
+    <li class="first">
+        {{else}}
+    <li>
+        {{/if}}
+        <a href="./list.html"><img src="{{item.cover}}" alt="{{item.title}}"></a>
+        <p>{{item.title}}</p>
+    </li>
+    {{/each}}
+</script>
 <script>
+    // 获取文章类别
     category.get().then(function (res) {
         var htmlStr = template('cate', res)
         $('#left_menu').html(htmlStr)
         $('#level_two').append(htmlStr)
+    })
+    // 获取焦点图
+    article.getFocuse().then(function (res) {
+        console.log(res);
+        if (res.code === 200) {
+            var htmlStr = template('focus', res)
+            $('#focus_list').html(htmlStr)
+        } else {
+            alert(res.msg)
+        }
     })
 </script>
 

@@ -16,4 +16,6 @@ var APIURLS = {
     getCategorySearch: baseAddress + "/admin/category_search",
     // 获取文章
     search: baseAddress + "/admin/search",
+    // 获取文章
+    article_get: baseAddress + '/search'
 }
