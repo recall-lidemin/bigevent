@@ -19,5 +19,7 @@ var APIURLS = {
     // 获取文章
     article_get: baseAddress + '/search',
     // 获取一周热门排行
-    rank: baseAddress + '/rank'
+    rank: baseAddress + '/rank',
+    // 最新资讯
+    lastest: baseAddress + '/lastest'
 }

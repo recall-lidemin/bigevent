@@ -21,5 +21,9 @@ var article = {
         return $.get(APIURLS.rank, {
             'type': type
         })
+    },
+    lastest: function () {
+        return $.get(APIURLS.lastest)
     }
+
 }
