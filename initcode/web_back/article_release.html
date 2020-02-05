@@ -33,8 +33,9 @@
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
-                        <input type="file" id="exampleInputFile" name="cover">
+                        <input type="file" name="cover" id="cover">
                     </div>
+                    <img src="" alt="" id="imgPreView" style="width: 200px;margin-left: 20px;margin-top: 5px;">
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
@@ -106,6 +107,19 @@
             alert(res.msg);
         }
     });
+    // 图片预览
+    $('#cover').change(function () {
+        // 获取用户选中的文件
+        var curFile = this.files[0]
+        if (curFile) {
+            // URL.createObjectURL(curFile)创建对象的临时链接地址
+            var curFileUrl = URL.createObjectURL(curFile)
+            // 把地址设置成imgPreView的src
+            $('#imgPreView').attr('src', curFileUrl)
+        } else {
+            $('#imgPreView').attr('src', '')
+        }
+    })
 </script>
 
 </html>

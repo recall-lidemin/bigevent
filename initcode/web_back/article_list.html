@@ -23,11 +23,7 @@
                 <div class="col-xs-6">
                     <form class="form-inline">
                         <select id="selCategory" name="" class="form-control input-sm">
-                            <!-- <option>所有分类</option>
-                            <option>未分类</option>
-                            <option>奇趣事</option>
-                            <option>会生活</option>
-                            <option>爱旅行</option> -->
+
                         </select>
                         <select id="selStatus" name="" class="form-control input-sm">
                             <option value="">所有状态</option>
@@ -101,11 +97,11 @@
     </script>
     <script>
         category.get().then(function (res) {
-            console.log(res);
             var htmlstr = template("tmp_category", res);
             $("#selCategory").html(htmlstr);
         });
 
+        // 封装分页
         var curPage = 1;
         var curType = "";
         var curStatus = "";
@@ -146,8 +142,7 @@
         // 分页
         getAndShow();
 
-        // 
-
+        // 点击筛选
         $("#btnSearch").click(function () {
             curType = $("#selCategory").val();
             curStatus = $("#selStatus").val();
@@ -155,7 +150,7 @@
             getAndShow();
         });
 
-        //    点击删除
+        //点击删除
         $("#article_tbody").on("click", "#del", function () {
             //原则：让代码尽早的结束
             if (!confirm("确定删除吗？")) {
