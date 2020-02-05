@@ -16,5 +16,10 @@ var article = {
         return $.get(APIURLS.article_get, {
             perpage: 5
         })
+    },
+    rank: function (type) {
+        return $.get(APIURLS.rank, {
+            'type': type
+        })
     }
 }

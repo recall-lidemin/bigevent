@@ -137,7 +137,7 @@
         <div class="right_con">
             <div class="common_wrap">
                 <h3><i class="fa fa-bar-chart"></i> 一周热门排行</h3>
-                <ul class="content_list">
+                <ul class="content_list" id="content_list">
                     <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
                     <li><span class="second">2</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><span class="third">3</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
@@ -222,6 +222,7 @@
     <li><a href="./list.html">{{item.name}}</a></li>
     {{/each}}
 </script>
+
 <script id="focus" type="text/html">
     {{each data item index}}
     {{if index==0}}
@@ -234,6 +235,21 @@
     </li>
     {{/each}}
 </script>
+<!-- 一周热门排行榜 -->
+<script id="hot" type="text/html">
+    {{each data item index}}
+    {{if index==0}}
+    <li><span class="first">{{index+1}}</span><a href="#">{{item.title}}</a></li>
+    {{else if index==1}}
+    <li><span class="second">{{index+1}}</span><a href="#">{{item.title}}</a></li>
+    {{else if index==2}}
+    <li><span class="third">{{index+1}}</span><a href="#">{{item.title}}</a></li>
+    {{else}}
+    <li><span>{{index+1}}</span><a href="#">{{item.title}}</a></li>
+    {{/if}}
+    {{/each}}
+</script>
+
 <script>
     // 获取文章类别
     category.get().then(function (res) {
@@ -249,6 +265,16 @@
             $('#focus_list').html(htmlStr)
         } else {
             alert(res.msg)
+        }
+    })
+    // 一周热门排行榜
+    article.rank().then(function (res) {
+        console.log(res);
+        if (res.code === 200) {
+            var htmlStr = template('hot', res)
+            $('#content_list').html(htmlStr)
+        } else {
+            alert(res.code)
         }
     })
 </script>

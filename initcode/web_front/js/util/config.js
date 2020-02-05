@@ -17,5 +17,7 @@ var APIURLS = {
     // 获取文章
     search: baseAddress + "/admin/search",
     // 获取文章
-    article_get: baseAddress + '/search'
+    article_get: baseAddress + '/search',
+    // 获取一周热门排行
+    rank: baseAddress + '/rank'
 }
