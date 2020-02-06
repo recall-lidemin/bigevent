@@ -15,7 +15,7 @@ var APIURLS = {
     // 获取文章类别
     getCategorySearch: baseAddress + "/admin/category_search",
     // 获取文章
-    search: baseAddress + "/admin/search",
+    search: baseAddress + "/search",
     // 获取文章
     article_get: baseAddress + '/search',
     // 获取一周热门排行

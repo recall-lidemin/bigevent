@@ -164,7 +164,7 @@
 <!-- 文章类别nav -->
 <script id="cate" type="text/html">
     {{each data item}}
-    <li><a href="./list.html">{{item.name}}</a></li>
+    <li><a href="./list.html?id={{item.id}}">{{item.name}}</a></li>
     {{/each}}
 </script>
 <!-- 焦点图 -->
@@ -175,7 +175,7 @@
         {{else}}
     <li>
         {{/if}}
-        <a href="./list.html"><img src="{{item.cover}}" alt="{{item.title}}"></a>
+        <a href="./article.html"><img src="{{item.cover}}" alt="{{item.title}}"></a>
         <p>{{item.title}}</p>
     </li>
     {{/each}}
