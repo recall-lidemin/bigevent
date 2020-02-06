@@ -48,7 +48,9 @@
 
     <div class="main_con clearfix">
         <div class="left_con setfr">
-
+            <div class="list_title">
+                <h3 id="cat"></h3>
+            </div>
             <div class="news">
 
             </div>
@@ -58,13 +60,13 @@
         <div class="right_con setfl">
             <div class="common_wrap">
                 <h3><i class="fa fa-bar-chart"></i> 一周热门排行</h3>
-                <ul class="content_list">
+                <ul class="content_list" id="weekhot">
 
                 </ul>
             </div>
             <div class="common_wrap">
                 <h3><i class="fa fa-commenting-o"></i> 最新评论</h3>
-                <ul class="content_list comment_list">
+                <ul class="content_list comment_list" id="latest">
                     <li>
                         <span>山</span>
                         <b><em>山治</em> 9个月前(08-14)说:</b>
@@ -146,13 +148,10 @@
 
 <!-- 列表渲染 -->
 <script id="news" type="text/html">
-    <div class="list_title">
-        <h3>{{data[0].type}}</h3>
-    </div>
     {{each data item}}
     <div class="common_news_list">
-        <a href="#" class="list_pic"><img src="{{item.cover}}" alt=""></a>
-        <h4><a href="#">{{item.title}}</a></h4>
+        <a href="./article.html?id={{item.id}}" class="list_pic"><img src="{{item.cover}}" alt=""></a>
+        <h4><a href="./article.html?id={{item.id}}">{{item.title}}</a></h4>
         <p>{{item.content}}
         </p>
         <div class="new_info">
@@ -168,17 +167,27 @@
 <script id="hot" type="text/html">
     {{each data item index}}
     {{if index==0}}
-    <li><span class="first">{{index+1}}</span><a href="#">{{item.title}}</a></li>
+    <li><span class="first">{{index+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
     {{else if index==1}}
-    <li><span class="second">{{index+1}}</span><a href="#">{{item.title}}</a></li>
+    <li><span class="second">{{index+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
     {{else if index==2}}
-    <li><span class="third">{{index+1}}</span><a href="#">{{item.title}}</a></li>
+    <li><span class="third">{{index+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
     {{else}}
-    <li><span>{{index+1}}</span><a href="#">{{item.title}}</a></li>
+    <li><span>{{index+1}}</span><a href="./article.html?id={{item.id}}">{{item.title}}</a></li>
     {{/if}}
     {{/each}}
 </script>
 
+<!-- 最新评论 -->
+<script id="latest_comment" type="text/html">
+    {{each data item index}}
+    <li>
+        <span>山</span>
+        <b><em>山治</em> 9个月前(08-14)说:</b>
+        <strong>挺会玩的</strong>
+    </li>
+    {{/each}}
+</script>
 
 <script>
     // 从地址栏获取id
@@ -189,6 +198,12 @@
         var htmlStr = template('cate', res)
         $('#left_menu').html(htmlStr)
         $('#level_two').append(htmlStr)
+
+        res.data.forEach(function (item) {
+            if (item.id == id) {
+                $('#cat').html(item.name)
+            }
+        });
     })
 
     var curPage = 1
@@ -231,8 +246,14 @@
     article.rank(id).then(function (res) {
         console.log(res);
         var htmlStr = template('hot', res)
-        $('.content_list').html(htmlStr)
+        $('#weekhot').html(htmlStr)
     })
+
+    // 最新评论
+    // article.get_latest_comment(id).then(function (res) {
+    //     var htmlStr = template('latest_comment', res)
+    //     $('#latest').html(htmlStr)
+    // })
 </script>
 
 </html>

@@ -34,6 +34,19 @@ var article = {
             'type': type,
             'page': page
         })
+    },
+    // 最新评论
+    get_latest_comment: function (type) {
+        return $.get(APIURLS.get_latest_comment, {
+            'type': type
+        })
+    },
+    // 获取文章详情
+    get_article: function (id) {
+        return $.get(APIURLS.get_article, {
+            'id': id
+        })
     }
+
 
 }

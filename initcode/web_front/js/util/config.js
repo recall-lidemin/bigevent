@@ -21,5 +21,9 @@ var APIURLS = {
     // 获取一周热门排行
     rank: baseAddress + '/rank',
     // 最新资讯
-    lastest: baseAddress + '/lastest'
+    lastest: baseAddress + '/lastest',
+    // 最新评论
+    get_latest_comment: baseAddress + '/get_latest_comment',
+    // 获取文章详情
+    get_article: baseAddress + '/article'
 }
