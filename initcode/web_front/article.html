@@ -51,17 +51,17 @@
             </div>
 
 
-            <form action="" class="comment_form">
+            <form class="comment_form">
                 <div class="form_group">
                     <label>用户名：</label>
-                    <input type="text" placeholder="请输入用户名" class="comment_name">
+                    <input type="text" placeholder="请输入用户名" class="comment_name" id="userName">
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" class="comment_input" id="content"></textarea>
                 </div>
                 <div class="form_group">
-                    <input type="submit" name="" value="评 论" class="comment_sub"></div>
+                    <input type="button" name="" value="评 论" class="comment_sub" id="add"></div>
             </form>
 
             <div class="comment_count">
@@ -175,6 +175,7 @@
 <script src="js/util/config.js"></script>
 <script src="js/util/category.js"></script>
 <script src="js/util/article.js"></script>
+<script src="js/util/comment.js"></script>
 <script src="js/template-web.js"></script>
 <!-- 获取分类 -->
 <script id="cate" type="text/html">
@@ -244,6 +245,21 @@
             $('#weekhot').html(htmlStr)
         })
     })
+    // 发表评论
+    $('#add').click(function () {
+        var name = $('#userName').val().trim()
+        var content = $('#content').val().trim()
+
+        comment.add(name, content, id).then(function (res) {
+            if (res.code === 200) {
+                alert(res.msg)
+            } else {
+                alert(res.msg)
+            }
+        })
+    })
+    // 显示评论
+    
 </script>
 
 </html>

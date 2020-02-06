@@ -25,5 +25,7 @@ var APIURLS = {
     // 最新评论
     get_latest_comment: baseAddress + '/get_latest_comment',
     // 获取文章详情
-    get_article: baseAddress + '/article'
+    get_article: baseAddress + '/article',
+    // 发表评论
+    post_comment: baseAddress + '/post_comment'
 }
