@@ -97,21 +97,21 @@
     </script>
     <script>
         category.get().then(function (res) {
-            var htmlstr = template("tmp_category", res);
+            let htmlstr = template("tmp_category", res);
             $("#selCategory").html(htmlstr);
         });
 
         // 封装分页
-        var curPage = 1;
-        var curType = "";
-        var curStatus = "";
-        var curTotalPage;
+        let curPage = 1;
+        let curType = "";
+        let curStatus = "";
+        let curTotalPage;
 
         function getAndShow() {
             article.get(curPage, curType, curStatus).then(function (res) {
                 console.log(res);
                 if (res.code === 200) {
-                    var htmlstr = template("article_table", res);
+                    let htmlstr = template("article_table", res);
                     $("#article_tbody").html(htmlstr);
                     // 如果前后两次获取的总页吗不一样，则先销毁再重建
                     if (curTotalPage != res.totalPage) {
@@ -156,7 +156,7 @@
             if (!confirm("确定删除吗？")) {
                 return;
             }
-            var id = $(this).attr("data-id");
+            let id = $(this).attr("data-id");
             article.del(id).then(function (res) {
                 if (res.code === 200) {
                     getAndShow();

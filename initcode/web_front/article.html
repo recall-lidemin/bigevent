@@ -177,6 +177,9 @@
 <script src="js/util/article.js"></script>
 <script src="js/util/comment.js"></script>
 <script src="js/template-web.js"></script>
+<script src="js/dayjs/dayjs.min.js"></script>
+<script src="js/dayjs/relative.min.js"></script>
+<script src="js/dayjs/zh_cn.js"></script>
 <!-- 获取分类 -->
 <script id="cate" type="text/html">
     {{each data item }}
@@ -215,8 +218,12 @@
 
     </div>
     <div class="article_links">
+        {{if data.prev.id !== ""}}
         上一篇： <a href="./article.html?id={{data.prev.id}}">{{data.prev.title}}</a><br>
+        {{/if}}
+        {{if data.next.id !== ""}}
         下一篇： <a href="./article.html?id={{data.next.id}}">{{data.next.title}}</a>
+        {{/if}}
     </div>
 </script>
 <!-- 文章评论列表 -->
@@ -224,7 +231,7 @@
     {{each data item}}
     <div class="comment_detail_list">
         <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
-        <div class="name_time fl"><b>{{item.name.substr(1)}}</b><span>{{item.dt}}</span></div>
+        <div class="name_time fl"><b>{{item.name.substr(1)}}</b><span>{{item.relativeDt}}</span></div>
         <div class="comment_text fl">
             {{item.content}}
         </div>
@@ -232,12 +239,16 @@
     {{/each}}
 </script>
 <script>
+    // 处理时间戳
+    dayjs.extend(dayjs_plugin_relativeTime)
+    // dayjs设置语言
+    dayjs.locale('zh-cn')
     // 从地址栏获取id
-    var id = window.location.search.substr(4)
-    var hot_id
+    let id = window.location.search.substr(4)
+    let hot_id
 
     category.get().then(function (res) {
-        var htmlStr = template('cate', res)
+        let htmlStr = template('cate', res)
         $('#left_menu').html(htmlStr)
         $('#level_two').append(htmlStr)
     })
@@ -246,21 +257,21 @@
     article.get_article(id).then(function (res) {
         console.log(res);
         hot_id = res.data.type_id
-        var htmlStr = template('article', res)
+        let htmlStr = template('article', res)
         $('.article').html(htmlStr)
         $('.article_con').html(res.data.content)
 
         // 一周热门排行
         article.rank(hot_id).then(function (res) {
             console.log(res);
-            var htmlStr = template('hot', res)
+            let htmlStr = template('hot', res)
             $('#weekhot').html(htmlStr)
         })
     })
     // 发表评论
     $('#add').click(function () {
-        var name = $('#userName').val().trim()
-        var content = $('#content').val().trim()
+        let name = $('#userName').val().trim()
+        let content = $('#content').val().trim()
 
         comment.add(name, content, id).then(function (res) {
             if (res.code === 200) {
@@ -275,10 +286,18 @@
     function getAndShow() {
         comment.get(id).then(function (res) {
             console.log(res);
+            res.data.reverse()
+            // 对于所有的评论数据，给每一条数据中额外添加一个相对时间的属性
+            // 然后，在模板引擎中使用这个属性
+            res.data.forEach(function (item) {
+
+                // item.relativeDt = dayjs(item.dt).toNow()
+                item.relativeDt = dayjs().to(dayjs(item.dt))
+            })
             if (res.code === 200) {
-                var count = res.data.length
+                let count = res.data.length
                 $('.comment_count').html(`${count}条评论`)
-                var htmlStr = template('comment', res)
+                let htmlStr = template('comment', res)
                 $('#comment_list').html(htmlStr)
             } else {
                 alert(res.msg)

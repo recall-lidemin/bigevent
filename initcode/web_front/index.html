@@ -46,26 +46,7 @@
     <div class="main_con clearfix">
         <div class="left_con">
             <ul class="focus_list" id="focus_list">
-                <li class="first">
-                    <a href="#"><img src="images/pic01.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic02.jpg" alt=""></a>
-                    <p>图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic03.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic05.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic06.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
+
             </ul>
 
             <div class="common_title">
@@ -213,7 +194,7 @@
 <script>
     // 获取文章类别
     category.get().then(function (res) {
-        var htmlStr = template('cate', res)
+        let htmlStr = template('cate', res)
         $('#left_menu').html(htmlStr)
         $('#level_two').append(htmlStr)
     })
@@ -221,7 +202,7 @@
     article.getFocuse().then(function (res) {
         console.log(res);
         if (res.code === 200) {
-            var htmlStr = template('focus', res)
+            let htmlStr = template('focus', res)
             $('#focus_list').html(htmlStr)
         } else {
             alert(res.msg)
@@ -231,7 +212,7 @@
     article.rank().then(function (res) {
         console.log(res);
         if (res.code === 200) {
-            var htmlStr = template('hot', res)
+            let htmlStr = template('hot', res)
             $('#content_list').html(htmlStr)
         } else {
             alert(res.code)
@@ -241,7 +222,7 @@
     article.lastest().then(function (res) {
         console.log(res);
         if (res.code === 200) {
-            var htmlStr = template('news', res)
+            let htmlStr = template('news', res)
             $('.news').html(htmlStr)
         }
     })

@@ -63,8 +63,8 @@
     </div>
 
     <script>
-        var oChart = echarts.init(document.getElementById('curve_show'));
-        var aList_all = [{
+        let oChart = echarts.init(document.getElementById('curve_show'));
+        let aList_all = [{
                 'count': 36,
                 'date': '2019-04-13'
             },
@@ -189,12 +189,12 @@
         let aCount = [];
         let aDate = [];
 
-        for (var i = 0; i < aList_all.length; i++) {
+        for (let i = 0; i < aList_all.length; i++) {
             aCount.push(aList_all[i].count);
             aDate.push(aList_all[i].date);
         }
 
-        var chartopt = {
+        let chartopt = {
             title: {
                 text: '月新增文章数',
                 left: 'center',
@@ -284,8 +284,8 @@
         oChart.setOption(chartopt);
 
 
-        var oPie = echarts.init(document.getElementById('pie_show'));
-        var oPieopt = {
+        let oPie = echarts.init(document.getElementById('pie_show'));
+        let oPieopt = {
             title: {
                 top: 10,
                 text: '分类文章数量比',
@@ -362,8 +362,8 @@
 
 
 
-        var oColumn = this.echarts.init(document.getElementById('column_show'));
-        var oColumnopt = {
+        let oColumn = this.echarts.init(document.getElementById('column_show'));
+        let oColumnopt = {
             title: {
                 text: '文章访问量',
                 left: 'center',

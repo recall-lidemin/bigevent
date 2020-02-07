@@ -191,11 +191,11 @@
 
 <script>
     // 从地址栏获取id
-    var id = window.location.search.substr(4)
+    let id = window.location.search.substr(4)
 
     category.get().then(function (res) {
         res.id = id
-        var htmlStr = template('cate', res)
+        let htmlStr = template('cate', res)
         $('#left_menu').html(htmlStr)
         $('#level_two').append(htmlStr)
 
@@ -206,14 +206,14 @@
         });
     })
 
-    var curPage = 1
-    var curTotalPage
+    let curPage = 1
+    let curTotalPage
     // 获取文章,显示文章列表
     function getAndShow() {
         article.search(id, curPage).then(function (res) {
             if (res.code === 200) {
                 console.log(res);
-                var htmlStr = template('news', res)
+                let htmlStr = template('news', res)
                 $('.news').html(htmlStr)
                 // 如果页码小于等于1,则不需要建立分页
                 if (res.pages <= 1) {
@@ -245,13 +245,13 @@
     // 一周热门排行
     article.rank(id).then(function (res) {
         console.log(res);
-        var htmlStr = template('hot', res)
+        let htmlStr = template('hot', res)
         $('#weekhot').html(htmlStr)
     })
 
     // 最新评论
     // article.get_latest_comment(id).then(function (res) {
-    //     var htmlStr = template('latest_comment', res)
+    //     let htmlStr = template('latest_comment', res)
     //     $('#latest').html(htmlStr)
     // })
 </script>

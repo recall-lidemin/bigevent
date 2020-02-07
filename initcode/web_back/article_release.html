@@ -89,7 +89,7 @@
 </script>
 <script>
     $("#publish").click(function () {
-        var fd = new FormData(document.getElementById("myForm"));
+        let fd = new FormData(document.getElementById("myForm"));
         fd.append("state", "已发布");
         // 富文本编辑器中的内容
         fd.set("content", tinyMCE.activeEditor.getContent());
@@ -106,7 +106,7 @@
 
     category.get().then(function (res) {
         if (res.code === 200) {
-            var htmlstr = template("tmp", res);
+            let htmlstr = template("tmp", res);
             $("#category").html(htmlstr);
         } else {
             alert(res.msg);
@@ -115,10 +115,10 @@
     // 图片预览
     $('#cover').change(function () {
         // 获取用户选中的文件
-        var curFile = this.files[0]
+        let curFile = this.files[0]
         if (curFile) {
             // URL.createObjectURL(curFile)创建对象的临时链接地址
-            var curFileUrl = URL.createObjectURL(curFile)
+            let curFileUrl = URL.createObjectURL(curFile)
             // 把地址设置成imgPreView的src
             $('#imgPreView').attr('src', curFileUrl)
         } else {

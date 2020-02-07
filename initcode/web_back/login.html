@@ -35,8 +35,8 @@
 </body>
 <script>
     $("#login").on("click", function () {
-        var user_name = $("#user_name").val().trim();
-        var password = $("#password").val().trim();
+        let user_name = $("#user_name").val().trim();
+        let password = $("#password").val().trim();
         user.login(user_name, password)
             .then(function (res) {
                 if (res.code == 200) {

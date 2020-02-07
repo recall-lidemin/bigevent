@@ -1,4 +1,4 @@
-var article = {
+let article = {
     get: function (curPage, curType, curStatus) {
         return $.get(APIURLS.search, {
             "page": curPage,

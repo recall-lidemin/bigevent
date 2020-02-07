@@ -7,11 +7,11 @@
  */
 
 // 基地址
-var baseAddress = "http://192.168.0.110:8000";
+const baseAddress = "http://192.168.0.110:8000";
 // var baseAddress = "http://118.190.211.78:8000/api/";
 
 // 封装接口地址对象
-var APIURLS = {
+const APIURLS = {
     // 获取文章类别
     getCategorySearch: baseAddress + "/admin/category_search",
     // 获取文章
@@ -31,3 +31,14 @@ var APIURLS = {
     // 获取评论列表
     get_comments: baseAddress + '/get_comments'
 }
+
+function makeConst(obj) {
+    Object.freeze(obj);
+    Object.keys(obj).forEach(function (key) {
+        if (typeof obj[key] === 'object') {
+            makeConst(obj[key])
+        }
+    })
+}
+// 冻结接口地址
+makeConst(APIURLS)

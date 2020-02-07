@@ -128,8 +128,8 @@
                 if (res.code === 200) {
                     // res:{code, data:[]}
                     // 把数据拼接成html字符串，显示在tbody中
-                    // var htmlStr = template('id',数据)
-                    var htmlStr = template("tmp_cate", res)
+                    // let htmlStr = template('id',数据)
+                    let htmlStr = template("tmp_cate", res)
                     // 显示在dom容器中
                     $('#category_table').html(htmlStr)
                 }
@@ -140,8 +140,8 @@
 
         // 实现点击新增
         $("#model_add").click(function () {
-            var name = $("#name").val().trim();
-            var slug = $("#slug").val().trim();
+            let name = $("#name").val().trim();
+            let slug = $("#slug").val().trim();
             if (name.lemgth == 0 || slug.length == 0) {
                 alert("不能为空");
                 return;
@@ -174,7 +174,7 @@
         $("#category_table").on("click", "#del", function () {
             // 生成模板时要设置data-id,删除时获取
             // 获取data-id，
-            var id = $(this).attr("data-id");
+            let id = $(this).attr("data-id");
             category.del(id).then(function (res) {
                 if (res.code == 200) {
                     // alert(res.msg);
@@ -189,9 +189,9 @@
         $("#category_table").on("click", "#edit", function () {
             // 点击弹出模态框，并显示当前要编辑的内容
             // 获取类别
-            var id = $(this).attr("data-id");
-            var name = $(this).attr("data-name");
-            var slug = $(this).attr("data-slug");
+            let id = $(this).attr("data-id");
+            let name = $(this).attr("data-name");
+            let slug = $(this).attr("data-slug");
             // 设置
             $("#edit_id").val(id);
             $("#edit_name").val(name);
@@ -201,9 +201,9 @@
         });
         // 用户修改，之后点击保存，发请求做后续操作
         $("#model_save").click(function () {
-            var id = $("#edit_id").val().trim();
-            var name = $("#edit_name").val().trim();
-            var slug = $("#edit_slug").val().trim();
+            let id = $("#edit_id").val().trim();
+            let name = $("#edit_name").val().trim();
+            let slug = $("#edit_slug").val().trim();
             if (name.lemgth == 0 || slug.length == 0) {
                 alert("不能为空");
                 return;

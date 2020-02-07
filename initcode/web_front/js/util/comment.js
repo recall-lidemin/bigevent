@@ -1,4 +1,4 @@
-var comment = {
+let comment = {
     add: function (name, content, article_id) {
         return $.post(APIURLS.post_comment, {
             'name': name,

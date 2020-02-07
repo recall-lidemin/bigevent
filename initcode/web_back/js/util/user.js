@@ -6,7 +6,7 @@
  * Time:2020.1.16
  * 
  */
-var user = {
+let user = {
     // 登陆
     login: function (user_name, password) {
         return $.post(APIURLS.getLogin, {

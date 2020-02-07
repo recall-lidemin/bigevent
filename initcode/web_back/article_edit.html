@@ -92,7 +92,7 @@
     // console.log(window.location.search.split('=')[1]);
     // 获取当前要编辑文章的id
     // window.location.search获取当前页面地址查询字符串的值
-    var id = window.location.search.substr(4)
+    let id = window.location.search.substr(4)
 
     getAndShowCategory()
 
@@ -121,7 +121,7 @@
         category.get().then(function (res) {
             console.log(res);
             if (res.code === 200) {
-                var htmlStr = template('cate', res)
+                let htmlStr = template('cate', res)
                 $('#category').html(htmlStr)
                 getAndShow(id)
             } else {
@@ -132,7 +132,7 @@
 
     // 再实现编辑并提交保存
     $('#edit').click(function () {
-        var fd = new FormData(document.getElementById('form'))
+        let fd = new FormData(document.getElementById('form'))
         fd.append('id', id)
         fd.set('content', tinymce.activeEditor.getContent())
         article.publish(fd).then(function (res) {

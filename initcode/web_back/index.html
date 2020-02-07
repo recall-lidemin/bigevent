@@ -64,8 +64,8 @@
 
 
     <script>
-        var $level01 = $('.level01');
-        var $subli = $('.level02 li')
+        let $level01 = $('.level01');
+        let $subli = $('.level02 li')
         $level01.click(function () {
             $level01.not($(this)).removeClass('active');
             $(this).addClass('active');
@@ -89,8 +89,8 @@
         })
 
         function resizeFrame() {
-            var frame_w = $('#main_body').outerWidth();
-            var frame_h = $('#main_body').outerHeight();
+            let frame_w = $('#main_body').outerWidth();
+            let frame_h = $('#main_body').outerHeight();
             $('#main_frame').css({
                 'width': frame_w,
                 'height': frame_h
