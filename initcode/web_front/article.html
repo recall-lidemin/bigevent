@@ -68,7 +68,7 @@
                 4条评论
             </div>
 
-            <div class="comment_list_con">
+            <div class="comment_list_con" id="comment_list">
                 <div class="comment_detail_list">
                     <div class="person_pic fl">乔</div>
                     <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
@@ -219,6 +219,18 @@
         下一篇： <a href="./article.html?id={{data.next.id}}">{{data.next.title}}</a>
     </div>
 </script>
+<!-- 文章评论列表 -->
+<script id="comment" type="text/html">
+    {{each data item}}
+    <div class="comment_detail_list">
+        <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
+        <div class="name_time fl"><b>{{item.name.substr(1)}}</b><span>{{item.dt}}</span></div>
+        <div class="comment_text fl">
+            {{item.content}}
+        </div>
+    </div>
+    {{/each}}
+</script>
 <script>
     // 从地址栏获取id
     var id = window.location.search.substr(4)
@@ -257,9 +269,23 @@
                 alert(res.msg)
             }
         })
+        getAndShow()
     })
     // 显示评论
-    
+    function getAndShow() {
+        comment.get(id).then(function (res) {
+            console.log(res);
+            if (res.code === 200) {
+                var count = res.data.length
+                $('.comment_count').html(`${count}条评论`)
+                var htmlStr = template('comment', res)
+                $('#comment_list').html(htmlStr)
+            } else {
+                alert(res.msg)
+            }
+        })
+    }
+    getAndShow()
 </script>
 
 </html>

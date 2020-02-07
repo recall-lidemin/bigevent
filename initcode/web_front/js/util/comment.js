@@ -5,5 +5,11 @@ var comment = {
             'content': content,
             'article_id': article_id
         })
+    },
+    get: function (article_id) {
+        return $.get(APIURLS.get_comments, {
+            'article_id': article_id
+        })
     }
+
 }
