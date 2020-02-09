@@ -1,23 +1,23 @@
 let article = {
-    get: function (curPage, curType, curStatus) {
+    get: (curPage, curType, curStatus) => {
         return $.get(APIURLS.search, {
             "page": curPage,
             "type": curType,
             "state": curStatus
         });
     },
-    getById: function (id) {
+    getById: id => {
         return $.get(APIURLS.search, {
-            "id": id,
+            id
         });
     },
     // 删除
-    del: function (id) {
+    del: id => {
         return $.get(APIURLS.article_delete, {
-            "id": id
+            id
         });
     },
-    publish: function (fd) {
+    publish: fd => {
         return $.ajax({
             url: APIURLS.article_publish,
             type: "post",

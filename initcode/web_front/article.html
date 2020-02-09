@@ -247,15 +247,15 @@
     let id = window.location.search.substr(4)
     let hot_id
 
-    category.get().then(function (res) {
+    category.get().then(res => {
         let htmlStr = template('cate', res)
         $('#left_menu').html(htmlStr)
         $('#level_two').append(htmlStr)
     })
 
     // 获取文章详情
-    article.get_article(id).then(function (res) {
-        console.log(res);
+    article.get_article(id).then(res => {
+
         hot_id = res.data.type_id
         let htmlStr = template('article', res)
         $('.article').html(htmlStr)

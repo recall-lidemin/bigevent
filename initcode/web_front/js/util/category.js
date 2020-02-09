@@ -1,6 +1,6 @@
 let category = {
     // 获取文章类别
-    get: function () {
+    get: () => {
         return $.get(APIURLS.getCategorySearch);
     },
 }

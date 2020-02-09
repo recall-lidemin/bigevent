@@ -8,14 +8,14 @@
  */
 let user = {
     // 登陆
-    login: function (user_name, password) {
+    login: (user_name, password) => {
         return $.post(APIURLS.getLogin, {
             user_name,
             password
         });
     },
     // 登出
-    logout: function () {
+    logout: () => {
         $.post(APIURLS.getLogout)
             .then(function (res) {
                 if (res.code == 200) {
@@ -27,7 +27,7 @@ let user = {
             });
     },
     // 获取用户信息
-    getUserInfo: function () {
+    getUserInfo: () => {
         return $.get(APIURLS.getUserInfo);
     }
 }
